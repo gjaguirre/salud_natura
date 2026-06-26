@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios — Admin {{ settings.app_name }}</title>
+    <link rel="stylesheet" href="/static/css/admin.css">
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <h2>🌿 Admin</h2>
+            <p>{{ settings.app_name }}</p>
+        </div>
+        <ul>
+            <li><a href="/admin">🏠 Inicio</a></li>
+            <li><a href="/admin/remedios">🌱 Remedios</a></li>
+            <li><a href="/admin/usuarios" class="active">👥 Usuarios</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="/">← Volver al sitio</a>
+        </div>
+    </nav>
+    <main class="content">
+        <div class="page-header">
+            <h1>👥 Usuarios</h1>
+            <button class="btn btn-primary" onclick="abrirModal()">+ Nuevo Usuario</button>
+        </div>
+
+        {% if mensaje %}
+        <div class="alert">{{ mensaje }}</div>
+        {% endif %}
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Celular</th>
+                    <th>Email</th>
+                    <th>Dirección</th>
+                    <th>Ciudad/Prov/País</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in usuarios %}
+                <tr>
+                    <td>{{ u.id_usuario }}</td>
+                    <td>{{ u.nombre_completo }}</td>
+                    <td>{{ u.celular or '-' }}</td>
+                    <td>{{ u.email or '-' }}</td>
+                    <td class="truncate">{{ u.direccion_completa or '-' }}</td>
+                    <td>{{ u.ciudad_prov_pais or '-' }}</td>
+                    <td class="acciones">
+                        <button class="btn btn-sm" onclick="editarUsuario({{ u.id_usuario }}, '{{ u.nombre_completo | e }}', '{{ (u.celular or '') | e }}', '{{ (u.email or '') | e }}', '{{ (u.direccion_completa or '') | e }}', '{{ (u.ciudad_prov_pais or '') | e }}', '{{ u.latitud if u.latitud is not none else '' }}', '{{ u.longitud if u.longitud is not none else '' }}')">✏️</button>
+                        <form method="post" action="/admin/usuarios/{{ u.id_usuario }}/eliminar" style="display:inline" onsubmit="return confirm('¿Eliminar este usuario?')">
+                            <button class="btn btn-sm btn-danger">🗑️</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% if not usuarios %}
+                <tr><td colspan="7" class="empty">No hay usuarios registrados</td></tr>
+                {% endif %}
+            </tbody>
+        </table>
+
+        <div id="modal" class="modal" style="display:none">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modal-titulo">Nuevo Usuario</h2>
+                    <button class="btn-close" onclick="cerrarModal()">✕</button>
+                </div>
+                <form method="post" action="/admin/usuarios/guardar">
+                    <input type="hidden" name="id_usuario" id="f_id">
+                    <label>Nombre completo *
+                        <input type="text" name="nombre_completo" id="f_nombre" required>
+                    </label>
+                    <label>Celular
+                        <input type="text" name="celular" id="f_celular" placeholder="+54...">
+                    </label>
+                    <label>Email
+                        <input type="email" name="email" id="f_email">
+                    </label>
+                    <label>Dirección completa
+                        <input type="text" name="direccion_completa" id="f_direccion">
+                    </label>
+                    <label>Ciudad / Provincia / País
+                        <input type="text" name="ciudad_prov_pais" id="f_ciudad">
+                    </label>
+                    <label>Latitud
+                        <input type="number" step="any" name="latitud" id="f_lat">
+                    </label>
+                    <label>Longitud
+                        <input type="number" step="any" name="longitud" id="f_lon">
+                    </label>
+                    <div class="modal-actions">
+                        <button type="button" class="btn" onclick="cerrarModal()">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script>
+    function abrirModal() {
+        document.getElementById('modal-titulo').textContent = 'Nuevo Usuario';
+        document.getElementById('f_id').value = '';
+        document.getElementById('f_nombre').value = '';
+        document.getElementById('f_celular').value = '';
+        document.getElementById('f_email').value = '';
+        document.getElementById('f_direccion').value = '';
+        document.getElementById('f_ciudad').value = '';
+        document.getElementById('f_lat').value = '';
+        document.getElementById('f_lon').value = '';
+        document.getElementById('modal').style.display = 'flex';
+    }
+    function editarUsuario(id, nombre, celular, email, direccion, ciudad, lat, lon) {
+        document.getElementById('modal-titulo').textContent = 'Editar Usuario';
+        document.getElementById('f_id').value = id;
+        document.getElementById('f_nombre').value = nombre;
+        document.getElementById('f_celular').value = celular;
+        document.getElementById('f_email').value = email;
+        document.getElementById('f_direccion').value = direccion;
+        document.getElementById('f_ciudad').value = ciudad;
+        document.getElementById('f_lat').value = lat;
+        document.getElementById('f_lon').value = lon;
+        document.getElementById('modal').style.display = 'flex';
+    }
+    function cerrarModal() {
+        document.getElementById('modal').style.display = 'none';
+    }
+    </script>
+</body>
+</html>

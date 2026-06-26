@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remedios — Admin {{ settings.app_name }}</title>
+    <link rel="stylesheet" href="/static/css/admin.css">
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <h2>🌿 Admin</h2>
+            <p>{{ settings.app_name }}</p>
+        </div>
+        <ul>
+            <li><a href="/admin">🏠 Inicio</a></li>
+            <li><a href="/admin/remedios" class="active">🌱 Remedios</a></li>
+            <li><a href="/admin/usuarios">👥 Usuarios</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="/">← Volver al sitio</a>
+        </div>
+    </nav>
+    <main class="content">
+        <div class="page-header">
+            <h1>🌱 Remedios</h1>
+            <button class="btn btn-primary" onclick="abrirModal()">+ Nuevo Remedio</button>
+        </div>
+
+        {% if mensaje %}
+        <div class="alert">{{ mensaje }}</div>
+        {% endif %}
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Planta Base</th>
+                    <th>Propiedades</th>
+                    <th>Contraindicaciones</th>
+                    <th>Dosificación</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in remedios %}
+                <tr>
+                    <td>{{ r.id_remedio }}</td>
+                    <td>{{ r.nombre_remedio }}</td>
+                    <td>{{ r.planta_base or '-' }}</td>
+                    <td class="truncate">{{ r.propiedades or '-' }}</td>
+                    <td class="truncate">{{ r.contraindicaciones or '-' }}</td>
+                    <td class="truncate">{{ r.dosificacion or '-' }}</td>
+                    <td class="acciones">
+                        <button class="btn btn-sm" onclick="editarRemedio({{ r.id_remedio }}, '{{ r.nombre_remedio | e }}', '{{ (r.planta_base or '') | e }}', '{{ (r.propiedades or '') | e }}', '{{ (r.contraindicaciones or '') | e }}', '{{ (r.dosificacion or '') | e }}', '{{ (r.link_articulo_web or '') | e }}')">✏️</button>
+                        <form method="post" action="/admin/remedios/{{ r.id_remedio }}/eliminar" style="display:inline" onsubmit="return confirm('¿Eliminar este remedio?')">
+                            <button class="btn btn-sm btn-danger">🗑️</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% if not remedios %}
+                <tr><td colspan="7" class="empty">No hay remedios cargados</td></tr>
+                {% endif %}
+            </tbody>
+        </table>
+
+        <div id="modal" class="modal" style="display:none">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modal-titulo">Nuevo Remedio</h2>
+                    <button class="btn-close" onclick="cerrarModal()">✕</button>
+                </div>
+                <form method="post" action="/admin/remedios/guardar">
+                    <input type="hidden" name="id_remedio" id="f_id">
+                    <label>Nombre del remedio *
+                        <input type="text" name="nombre_remedio" id="f_nombre" required>
+                    </label>
+                    <label>Planta base
+                        <input type="text" name="planta_base" id="f_planta">
+                    </label>
+                    <label>Propiedades
+                        <textarea name="propiedades" id="f_propiedades" rows="3"></textarea>
+                    </label>
+                    <label>Contraindicaciones
+                        <textarea name="contraindicaciones" id="f_contraindicaciones" rows="3"></textarea>
+                    </label>
+                    <label>Dosificación
+                        <textarea name="dosificacion" id="f_dosificacion" rows="2"></textarea>
+                    </label>
+                    <label>Link artículo web
+                        <input type="text" name="link_articulo_web" id="f_link">
+                    </label>
+                    <div class="modal-actions">
+                        <button type="button" class="btn" onclick="cerrarModal()">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script>
+    function abrirModal() {
+        document.getElementById('modal-titulo').textContent = 'Nuevo Remedio';
+        document.getElementById('f_id').value = '';
+        document.getElementById('f_nombre').value = '';
+        document.getElementById('f_planta').value = '';
+        document.getElementById('f_propiedades').value = '';
+        document.getElementById('f_contraindicaciones').value = '';
+        document.getElementById('f_dosificacion').value = '';
+        document.getElementById('f_link').value = '';
+        document.getElementById('modal').style.display = 'flex';
+    }
+    function editarRemedio(id, nombre, planta, propiedades, contras, dosis, link) {
+        document.getElementById('modal-titulo').textContent = 'Editar Remedio';
+        document.getElementById('f_id').value = id;
+        document.getElementById('f_nombre').value = nombre;
+        document.getElementById('f_planta').value = planta;
+        document.getElementById('f_propiedades').value = propiedades;
+        document.getElementById('f_contraindicaciones').value = contras;
+        document.getElementById('f_dosificacion').value = dosis;
+        document.getElementById('f_link').value = link;
+        document.getElementById('modal').style.display = 'flex';
+    }
+    function cerrarModal() {
+        document.getElementById('modal').style.display = 'none';
+    }
+    </script>
+</body>
+</html>
