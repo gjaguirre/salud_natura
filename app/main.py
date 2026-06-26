@@ -33,6 +33,14 @@ async def home(request: Request):
     })
 
 
+@app.get("/taller")
+async def taller(request: Request):
+    return templates.TemplateResponse("taller.html", {
+        "request": request,
+        "settings": settings,
+    })
+
+
 @app.get("/health")
 async def health():
     return {"status": "ok"}

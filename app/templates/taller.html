@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taller — {{ settings.app_name }}</title>
+    <link rel="stylesheet" href="/static/css/taller.css">
+</head>
+<body>
+    <header>
+        <h1>🌿 {{ settings.app_name }}</h1>
+        <p class="tagline">Taller: Página Web Dinámica con Claude Code</p>
+    </header>
+
+    <main>
+        <section class="intro">
+            <h2>Bienvenidos al Taller</h2>
+            <p>En este taller van a aprender a colaborar en un proyecto real usando <strong>GitHub</strong> y <strong>Claude Code</strong>. Van a hacer un fork del repositorio, clonar el código, hacer cambios y crear un Pull Request.</p>
+            <div class="repo-box">
+                <p><strong>Repositorio del proyecto:</strong></p>
+                <a href="https://github.com/centrograduadosFIUBA/salud_natura" target="_blank">https://github.com/centrograduadosFIUBA/salud_natura</a>
+            </div>
+        </section>
+
+        <section class="paso">
+            <div class="paso-numero">1</div>
+            <div class="paso-contenido">
+                <h3>Requisitos previos</h3>
+                <p>Antes de empezar, asegurense de tener instalado:</p>
+                <ul>
+                    <li><strong>Git</strong> — <a href="https://git-scm.com/downloads" target="_blank">Descargar Git</a></li>
+                    <li><strong>Python 3.10+</strong> — <a href="https://www.python.org/downloads/" target="_blank">Descargar Python</a></li>
+                    <li><strong>Claude Code</strong> — Instalado y configurado</li>
+                    <li><strong>Cuenta en GitHub</strong> — <a href="https://github.com/signup" target="_blank">Crear cuenta</a></li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="paso">
+            <div class="paso-numero">2</div>
+            <div class="paso-contenido">
+                <h3>Fork del repositorio</h3>
+                <p>Un <strong>fork</strong> es una copia del repositorio en tu propia cuenta de GitHub. Esto te permite hacer cambios sin afectar el proyecto original.</p>
+                <ol>
+                    <li>Entrá a <a href="https://github.com/centrograduadosFIUBA/salud_natura" target="_blank">github.com/centrograduadosFIUBA/salud_natura</a></li>
+                    <li>Hacé clic en el botón <strong>"Fork"</strong> (arriba a la derecha)</li>
+                    <li>Seleccioná tu cuenta personal como destino</li>
+                    <li>Esperá a que se cree la copia — vas a tener el repo en <code>github.com/TU_USUARIO/salud_natura</code></li>
+                </ol>
+                <div class="tip">
+                    <strong>💡 Tip:</strong> El fork mantiene una conexión con el repo original, lo que permite después enviar tus cambios como un Pull Request.
+                </div>
+            </div>
+        </section>
+
+        <section class="paso">
+            <div class="paso-numero">3</div>
+            <div class="paso-contenido">
+                <h3>Clonar el repositorio</h3>
+                <p>Ahora vas a descargar tu fork a tu computadora para poder trabajar localmente.</p>
+                <p>Abrí una terminal y ejecutá:</p>
+                <div class="code-block">
+                    <code>git clone https://github.com/TU_USUARIO/salud_natura.git</code>
+                </div>
+                <p>Reemplazá <code>TU_USUARIO</code> por tu nombre de usuario de GitHub.</p>
+                <p>Entrá a la carpeta del proyecto:</p>
+                <div class="code-block">
+                    <code>cd salud_natura</code>
+                </div>
+                <div class="tip">
+                    <strong>💡 Tip:</strong> También podés pedirle a Claude Code: <em>"Cloná mi fork de salud_natura y abrilo"</em>
+                </div>
+            </div>
+        </section>
+
+        <section class="paso">
+            <div class="paso-numero">4</div>
+            <div class="paso-contenido">
+                <h3>Crear una rama de trabajo</h3>
+                <p>Nunca trabajamos directo en <code>main</code>. Creamos una rama con nuestro nombre para los cambios:</p>
+                <div class="code-block">
+                    <code>git checkout -b feature/mi-nombre-cambio</code>
+                </div>
+                <p>Por ejemplo:</p>
+                <div class="code-block">
+                    <code>git checkout -b feature/jose-nuevo-remedio</code>
+                </div>
+            </div>
+        </section>
+
+        <section class="paso">
+            <div class="paso-numero">5</div>
+            <div class="paso-contenido">
+                <h3>Levantar el proyecto localmente</h3>
+                <p>Para ver los cambios en tu navegador mientras trabajás:</p>
+                <div class="code-block">
+                    <code># Crear entorno virtual
+python -m venv .venv
+
+# Activar (Windows)
+.venv\Scripts\activate
+
+# Activar (Mac/Linux)
+source .venv/bin/activate
+
+# Instalar dependencias
+pip install -r requirements.txt
+
+# Levantar el servidor
+uvicorn app.main:app --reload --port 8000</code>
+                </div>
+                <p>Abrí <a href="http://localhost:8000" target="_blank">http://localhost:8000</a> en tu navegador.</p>
+                <div class="tip">
+                    <strong>💡 Tip:</strong> Pedile a Claude Code: <em>"Instalá las dependencias y levantá el servidor"</em>
+                </div>
+            </div>
+        </section>
+
+        <section class="paso">
+            <div class="paso-numero">6</div>
+            <div class="paso-contenido">
+                <h3>Hacer un cambio</h3>
+                <p>Ahora viene lo divertido. Hacé un cambio en el proyecto. Algunas ideas:</p>
+                <ul>
+                    <li>🌱 <strong>Agregar un remedio nuevo</strong> desde el admin (<code>/admin/remedios</code>)</li>
+                    <li>🎨 <strong>Cambiar un color o estilo</strong> en <code>app/static/css/styles.css</code></li>
+                    <li>✏️ <strong>Modificar un texto</strong> en <code>app/templates/index.html</code></li>
+                    <li>🔧 <strong>Agregar un campo nuevo</strong> a una tabla en <code>app/database.py</code></li>
+                </ul>
+                <div class="tip">
+                    <strong>💡 Tip con Claude Code:</strong> Pedile lo que quieras cambiar en lenguaje natural. Por ejemplo:
+                    <ul>
+                        <li><em>"Cambiá el color del header a azul"</em></li>
+                        <li><em>"Agregá un footer con links a redes sociales"</em></li>
+                        <li><em>"Agregá un buscador de remedios"</em></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="paso">
+            <div class="paso-numero">7</div>
+            <div class="paso-contenido">
+                <h3>Commitear los cambios</h3>
+                <p>Una vez que hiciste tu cambio y verificaste que funciona:</p>
+                <div class="code-block">
+                    <code># Ver qué archivos cambiaron
+git status
+
+# Agregar los archivos modificados
+git add -A
+
+# Crear el commit con un mensaje descriptivo
+git commit -m "feat: descripción corta de mi cambio"</code>
+                </div>
+                <p><strong>Convención de mensajes:</strong></p>
+                <ul>
+                    <li><code>feat:</code> — nueva funcionalidad</li>
+                    <li><code>fix:</code> — corrección de bug</li>
+                    <li><code>docs:</code> — documentación</li>
+                    <li><code>style:</code> — cambios de estilo/CSS</li>
+                </ul>
+                <div class="tip">
+                    <strong>💡 Tip:</strong> Pedile a Claude Code: <em>"Hacé un commit con los cambios"</em>
+                </div>
+            </div>
+        </section>
+
+        <section class="paso">
+            <div class="paso-numero">8</div>
+            <div class="paso-contenido">
+                <h3>Pushear la rama</h3>
+                <p>Subí tu rama a tu fork en GitHub:</p>
+                <div class="code-block">
+                    <code>git push -u origin feature/mi-nombre-cambio</code>
+                </div>
+            </div>
+        </section>
+
+        <section class="paso">
+            <div class="paso-numero">9</div>
+            <div class="paso-contenido">
+                <h3>Crear el Pull Request (PR)</h3>
+                <p>El Pull Request es la forma de proponer tus cambios al proyecto original.</p>
+                <ol>
+                    <li>Entrá a tu fork en GitHub (<code>github.com/TU_USUARIO/salud_natura</code>)</li>
+                    <li>GitHub te va a mostrar un banner amarillo: <strong>"Compare & pull request"</strong> — hacé clic</li>
+                    <li>Verificá que el PR vaya hacia:
+                        <ul>
+                            <li><strong>Base repository:</strong> <code>centrograduadosFIUBA/salud_natura</code></li>
+                            <li><strong>Base:</strong> <code>main</code></li>
+                            <li><strong>Head repository:</strong> <code>TU_USUARIO/salud_natura</code></li>
+                            <li><strong>Compare:</strong> tu rama</li>
+                        </ul>
+                    </li>
+                    <li>Escribí un título descriptivo y una descripción de lo que cambiaste</li>
+                    <li>Hacé clic en <strong>"Create pull request"</strong></li>
+                </ol>
+                <div class="tip">
+                    <strong>💡 Tip:</strong> También podés crear el PR desde Claude Code: <em>"Creá un Pull Request con mis cambios"</em>
+                </div>
+            </div>
+        </section>
+
+        <section class="paso">
+            <div class="paso-numero">✓</div>
+            <div class="paso-contenido">
+                <h3>¡Listo!</h3>
+                <p>Tu Pull Request va a ser revisado por los tutores. Si está todo bien, se mergea al proyecto y tus cambios van a aparecer en <a href="https://saludnatura.graduadosfiuba.org" target="_blank">saludnatura.graduadosfiuba.org</a>.</p>
+                <p><strong>¡Felicitaciones, acabás de colaborar en un proyecto real!</strong></p>
+            </div>
+        </section>
+
+        <section class="recursos">
+            <h2>Recursos útiles</h2>
+            <ul>
+                <li><a href="https://github.com/centrograduadosFIUBA/salud_natura" target="_blank">Repositorio del proyecto</a></li>
+                <li><a href="https://saludnatura.graduadosfiuba.org" target="_blank">Sitio en producción</a></li>
+                <li><a href="https://saludnatura.graduadosfiuba.org/admin" target="_blank">Panel de administración</a></li>
+                <li><a href="https://docs.github.com/es/pull-requests" target="_blank">Documentación de Pull Requests (GitHub)</a></li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>{{ settings.app_name }} — Taller de Página Web Dinámica con Claude Code</p>
+        <p>Centro de Graduados — Facultad de Ingeniería — UBA</p>
+        <p><a href="/">← Volver al sitio</a></p>
+    </footer>
+</body>
+</html>
