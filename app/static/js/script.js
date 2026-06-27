@@ -8,10 +8,12 @@ function enviarFormulario(e) {
   e.target.reset();
 }
 
+// Scroll suave del indicador
 document.querySelector('.scroll-indicator')?.addEventListener('click', () => {
   document.getElementById('pilares').scrollIntoView({ behavior: 'smooth' });
 });
 
+// Animación de entrada en scroll
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
