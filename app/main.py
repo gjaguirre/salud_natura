@@ -126,19 +126,20 @@ async def admin_remedios_guardar(
     contraindicaciones: str = Form(""),
     dosificacion: str = Form(""),
     link_articulo_web: str = Form(""),
+    imagen_url: str = Form(""),
     id_remedio: str = Form(""),
 ):
     conn = get_db()
     if id_remedio:
         conn.execute(
-            "UPDATE base_conocimiento_salud SET nombre_remedio=?, planta_base=?, propiedades=?, contraindicaciones=?, dosificacion=?, link_articulo_web=? WHERE id_remedio=?",
-            (nombre_remedio, planta_base or None, propiedades or None, contraindicaciones or None, dosificacion or None, link_articulo_web or None, int(id_remedio)),
+            "UPDATE base_conocimiento_salud SET nombre_remedio=?, planta_base=?, propiedades=?, contraindicaciones=?, dosificacion=?, link_articulo_web=?, imagen_url=? WHERE id_remedio=?",
+            (nombre_remedio, planta_base or None, propiedades or None, contraindicaciones or None, dosificacion or None, link_articulo_web or None, imagen_url or None, int(id_remedio)),
         )
         mensaje = "Remedio actualizado"
     else:
         conn.execute(
-            "INSERT INTO base_conocimiento_salud (nombre_remedio, planta_base, propiedades, contraindicaciones, dosificacion, link_articulo_web) VALUES (?, ?, ?, ?, ?, ?)",
-            (nombre_remedio, planta_base or None, propiedades or None, contraindicaciones or None, dosificacion or None, link_articulo_web or None),
+            "INSERT INTO base_conocimiento_salud (nombre_remedio, planta_base, propiedades, contraindicaciones, dosificacion, link_articulo_web, imagen_url) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            (nombre_remedio, planta_base or None, propiedades or None, contraindicaciones or None, dosificacion or None, link_articulo_web or None, imagen_url or None),
         )
         mensaje = "Remedio creado"
     conn.commit()

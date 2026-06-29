@@ -35,6 +35,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Imagen</th>
                     <th>Nombre</th>
                     <th>Planta Base</th>
                     <th>Propiedades</th>
@@ -47,13 +48,14 @@
                 {% for r in remedios %}
                 <tr>
                     <td>{{ r.id_remedio }}</td>
+                    <td>{% if r.imagen_url %}<img src="{{ r.imagen_url }}" style="width:40px;height:40px;object-fit:cover;border-radius:50%;">{% else %}-{% endif %}</td>
                     <td>{{ r.nombre_remedio }}</td>
                     <td>{{ r.planta_base or '-' }}</td>
                     <td class="truncate">{{ r.propiedades or '-' }}</td>
                     <td class="truncate">{{ r.contraindicaciones or '-' }}</td>
                     <td class="truncate">{{ r.dosificacion or '-' }}</td>
                     <td class="acciones">
-                        <button class="btn btn-sm" onclick="editarRemedio({{ r.id_remedio }}, '{{ r.nombre_remedio | e }}', '{{ (r.planta_base or '') | e }}', '{{ (r.propiedades or '') | e }}', '{{ (r.contraindicaciones or '') | e }}', '{{ (r.dosificacion or '') | e }}', '{{ (r.link_articulo_web or '') | e }}')">✏️</button>
+                        <button class="btn btn-sm" onclick="editarRemedio({{ r.id_remedio }}, '{{ r.nombre_remedio | e }}', '{{ (r.planta_base or '') | e }}', '{{ (r.propiedades or '') | e }}', '{{ (r.contraindicaciones or '') | e }}', '{{ (r.dosificacion or '') | e }}', '{{ (r.link_articulo_web or '') | e }}', '{{ (r.imagen_url or '') | e }}')">✏️</button>
                         <form method="post" action="/admin/remedios/{{ r.id_remedio }}/eliminar" style="display:inline" onsubmit="return confirm('¿Eliminar este remedio?')">
                             <button class="btn btn-sm btn-danger">🗑️</button>
                         </form>
@@ -61,7 +63,7 @@
                 </tr>
                 {% endfor %}
                 {% if not remedios %}
-                <tr><td colspan="7" class="empty">No hay remedios cargados</td></tr>
+                <tr><td colspan="8" class="empty">No hay remedios cargados</td></tr>
                 {% endif %}
             </tbody>
         </table>
@@ -92,6 +94,9 @@
                     <label>Link artículo web
                         <input type="text" name="link_articulo_web" id="f_link">
                     </label>
+                    <label>URL de imagen
+                        <input type="text" name="imagen_url" id="f_imagen" placeholder="/static/img/nombre.jpg o URL externa">
+                    </label>
                     <div class="modal-actions">
                         <button type="button" class="btn" onclick="cerrarModal()">Cancelar</button>
                         <button type="submit" class="btn btn-primary">Guardar</button>
@@ -111,9 +116,10 @@
         document.getElementById('f_contraindicaciones').value = '';
         document.getElementById('f_dosificacion').value = '';
         document.getElementById('f_link').value = '';
+        document.getElementById('f_imagen').value = '';
         document.getElementById('modal').style.display = 'flex';
     }
-    function editarRemedio(id, nombre, planta, propiedades, contras, dosis, link) {
+    function editarRemedio(id, nombre, planta, propiedades, contras, dosis, link, imagen) {
         document.getElementById('modal-titulo').textContent = 'Editar Remedio';
         document.getElementById('f_id').value = id;
         document.getElementById('f_nombre').value = nombre;
@@ -122,6 +128,7 @@
         document.getElementById('f_contraindicaciones').value = contras;
         document.getElementById('f_dosificacion').value = dosis;
         document.getElementById('f_link').value = link;
+        document.getElementById('f_imagen').value = imagen;
         document.getElementById('modal').style.display = 'flex';
     }
     function cerrarModal() {

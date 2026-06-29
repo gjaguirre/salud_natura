@@ -27,9 +27,16 @@ def init_db():
             propiedades TEXT,
             contraindicaciones TEXT,
             dosificacion TEXT,
-            link_articulo_web TEXT
+            link_articulo_web TEXT,
+            imagen_url TEXT
         )
     """)
+
+    try:
+        conn.execute("ALTER TABLE base_conocimiento_salud ADD COLUMN imagen_url TEXT")
+        conn.commit()
+    except:
+        pass
 
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS usuarios_y_clientes (

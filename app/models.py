@@ -9,6 +9,7 @@ class RemedioIn(BaseModel):
     contraindicaciones: Optional[str] = None
     dosificacion: Optional[str] = None
     link_articulo_web: Optional[str] = None
+    imagen_url: Optional[str] = None
 
 
 class RemedioOut(RemedioIn):
