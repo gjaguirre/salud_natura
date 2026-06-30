@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Form, Request
+from fastapi import FastAPI, Form, Query, Request
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -60,6 +60,33 @@ async def listar_remedios():
     remedios = [dict(r) for r in conn.execute("SELECT * FROM base_conocimiento_salud").fetchall()]
     conn.close()
     return {"ok": True, "data": remedios}
+
+
+@app.get("/api/remedios/buscar")
+async def buscar_remedios(q: str = Query(..., min_length=1)):
+    termino = q.strip()
+    patron = f"%{termino}%"
+    conn = get_db()
+    remedios = [dict(r) for r in conn.execute(
+        """
+        SELECT *
+        FROM base_conocimiento_salud
+        WHERE nombre_remedio LIKE ?
+           OR propiedades LIKE ?
+           OR contraindicaciones LIKE ?
+           OR dosificacion LIKE ?
+        ORDER BY
+            CASE
+                WHEN lower(nombre_remedio) = lower(?) THEN 0
+                WHEN nombre_remedio LIKE ? THEN 1
+                ELSE 2
+            END,
+            id_remedio
+        """,
+        (patron, patron, patron, patron, termino, patron),
+    ).fetchall()]
+    conn.close()
+    return {"ok": True, "q": q, "data": remedios}
 
 
 @app.get("/api/botiquin")
