@@ -37,10 +37,10 @@
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th onclick="sortTable(0)" style="cursor:pointer" title="Ordenar por ID">ID ↕</th>
                     <th>Imagen</th>
-                    <th>Nombre</th>
-                    <th>Planta Base</th>
+                    <th onclick="sortTable(2)" style="cursor:pointer" title="Ordenar por Nombre">Nombre ↕</th>
+                    <th onclick="sortTable(3)" style="cursor:pointer" title="Ordenar por Planta Base">Planta Base ↕</th>
                     <th>Propiedades</th>
                     <th>Contraindicaciones</th>
                     <th>Dosificación</th>
@@ -137,6 +137,22 @@
     function cerrarModal() {
         document.getElementById('modal').style.display = 'none';
     }
-    </script>
+    let _sortDir = {};
+    function sortTable(col) {
+        const tbody = document.querySelector('table tbody');
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+        const asc = !_sortDir[col];
+        _sortDir = {};
+        _sortDir[col] = asc;
+        rows.sort((a, b) => {
+            const ta = a.cells[col]?.textContent.trim() || '';
+            const tb = b.cells[col]?.textContent.trim() || '';
+            const na = parseFloat(ta), nb = parseFloat(tb);
+            const cmp = (!isNaN(na) && !isNaN(nb)) ? na - nb : ta.localeCompare(tb, 'es');
+            return asc ? cmp : -cmp;
+        });
+        rows.forEach(r => tbody.appendChild(r));
+    }
+</script>
 </body>
 </html>
