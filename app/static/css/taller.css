@@ -181,6 +181,93 @@ main {
     color: #2d5016;
 }
 
+/* ── Artículo ── */
+.articulo {
+    background: white;
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.articulo h2 {
+    color: #2d5016;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+.articulo h3 {
+    color: #2d5016;
+    font-size: 1rem;
+    margin: 1.4rem 0 0.5rem;
+}
+
+.articulo p {
+    font-size: 0.93rem;
+    line-height: 1.7;
+    color: #444;
+    margin-bottom: 0.6rem;
+}
+
+.articulo ul {
+    margin: 0.4rem 0 0.8rem 1.4rem;
+    font-size: 0.93rem;
+    color: #444;
+    line-height: 1.7;
+}
+
+.articulo ul li { margin-bottom: 0.25rem; }
+
+.flujo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin: 0.6rem 0 1rem;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.flujo-malo  { background: #fff0f0; border: 1px solid #f5c6c6; }
+.flujo-bueno { background: #e8f5e9; border: 1px solid #a5d6a7; }
+
+.flujo-paso {
+    background: white;
+    border-radius: 6px;
+    padding: 0.3rem 0.7rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    white-space: nowrap;
+}
+
+.flujo-malo  .flujo-paso { color: #c0392b; }
+.flujo-bueno .flujo-paso { color: #2d5016; }
+.flujo-flecha { color: #888; font-weight: normal; }
+
+.articulo-regla {
+    background: #f5f0e0;
+    border-left: 4px solid #b8860b;
+    border-radius: 0 8px 8px 0;
+    padding: 1.1rem 1.3rem;
+    margin-top: 1.4rem;
+}
+
+.articulo-regla p {
+    margin-bottom: 0.5rem;
+    color: #444;
+}
+
+.articulo-cita {
+    font-style: italic;
+    font-size: 1rem !important;
+    color: #2d5016 !important;
+    font-weight: bold;
+    margin-top: 0.8rem !important;
+    margin-bottom: 0 !important;
+}
+
 /* ── Pasos ── */
 .paso {
     display: flex;

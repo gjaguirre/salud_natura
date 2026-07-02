@@ -156,6 +156,87 @@
             </div>
         </section>
 
+        <section class="articulo">
+            <h2>Resistí la tentación de "tirarle" un PDF a Claude Code y que se arregle</h2>
+
+            <p>Es una de las primeras tentaciones cuando empezamos a trabajar con Claude Code. Tenemos un folleto, un documento de Word, un PDF de una empresa o un manual de productos y pensamos: <em>"Se lo paso a Claude Code y que haga la página."</em></p>
+
+            <p>A veces funciona sorprendentemente bien. Otras veces... el resultado termina siendo un verdadero dolor de cabeza.</p>
+
+            <p>El problema no es Claude Code. El problema es que un PDF <strong>no es una especificación técnica</strong>.</p>
+
+            <p>Un PDF suele mezclar muchas cosas al mismo tiempo: información importante, textos comerciales, ejemplos, imágenes, comentarios, datos históricos, información repetida, detalles que no corresponden a una página web.</p>
+
+            <p>Cuando Claude Code recibe ese documento, tiene que interpretar qué es importante y qué no. Como cualquier desarrollador al que le entregan un documento ambiguo, completa los espacios vacíos tomando decisiones por su cuenta.</p>
+
+            <p>Y ahí aparecen problemas muy comunes:</p>
+            <ul>
+                <li>Hardcodea datos que deberían ser configurables.</li>
+                <li>Coloca información en secciones incorrectas.</li>
+                <li>Crea páginas que nadie pidió.</li>
+                <li>Mezcla contenido con lógica de programación.</li>
+                <li>Duplica información.</li>
+                <li>Inventa estructuras porque el documento no las definía claramente.</li>
+                <li>Hace "suposiciones inteligentes" que muchas veces no coinciden con lo que el cliente quería.</li>
+            </ul>
+
+            <h3>Un flujo mucho más profesional</h3>
+
+            <p>En lugar de hacer esto:</p>
+            <div class="flujo flujo-malo">
+                <span class="flujo-paso">PDF</span>
+                <span class="flujo-flecha">→</span>
+                <span class="flujo-paso">Claude Code</span>
+            </div>
+
+            <p>Conviene trabajar así:</p>
+            <div class="flujo flujo-bueno">
+                <span class="flujo-paso">PDF</span>
+                <span class="flujo-flecha">→</span>
+                <span class="flujo-paso">LLM Analista</span>
+                <span class="flujo-flecha">→</span>
+                <span class="flujo-paso">Especificación</span>
+                <span class="flujo-flecha">→</span>
+                <span class="flujo-paso">Claude Code</span>
+            </div>
+
+            <h3>Paso 1 — Conversá con un LLM</h3>
+            <p>Podés usar ChatGPT, Claude en modo conversación, Gemini o cualquier otro modelo. Su trabajo no es programar: su trabajo es <strong>comprender el documento</strong>. Durante esta etapa conviene hacer preguntas como:</p>
+            <ul>
+                <li>¿Qué información es realmente importante?</li>
+                <li>¿Qué páginas debería tener el sitio?</li>
+                <li>¿Qué secciones necesita cada página?</li>
+                <li>¿Qué información falta?</li>
+                <li>¿Qué cosas son ambiguas?</li>
+                <li>¿Qué decisiones habría que consultar con el cliente?</li>
+                <li>¿Qué datos deberían quedar parametrizados?</li>
+            </ul>
+            <p>En otras palabras, el LLM actúa como un <strong>analista funcional</strong>.</p>
+
+            <h3>Paso 2 — Construí una especificación</h3>
+            <p>Una buena especificación debería indicar:</p>
+            <ul>
+                <li>Objetivo del sitio y público al que está dirigido.</li>
+                <li>Estructura de navegación y páginas que tendrá.</li>
+                <li>Contenido de cada sección y comportamiento esperado.</li>
+                <li>Componentes reutilizables y datos configurables.</li>
+                <li>Reglas de negocio, restricciones y — muy importante — cosas que <strong>no</strong> deben hacerse.</li>
+            </ul>
+            <p>Cuanto más clara sea esta especificación, menos tendrá que "imaginar" Claude Code.</p>
+
+            <h3>Paso 3 — Recién ahí empezá a programar</h3>
+            <p>Claude Code funciona mucho mejor cuando recibe instrucciones precisas. En lugar de interpretar un PDF completo, recibe una descripción clara de lo que debe construir. Eso reduce enormemente los errores y hace que el proyecto sea mucho más fácil de mantener y continuar.</p>
+
+            <h3>Pensá como un equipo de desarrollo</h3>
+            <p>En un proyecto profesional normalmente no sucede <strong>Cliente → Programador</strong>. Sucede <strong>Cliente → Analista → Especificación → Programador</strong>. Cuando trabajamos con IA ocurre exactamente lo mismo: el LLM conversacional cumple el rol del analista; Claude Code cumple el rol del desarrollador. Cada uno hace aquello para lo que está mejor preparado.</p>
+
+            <div class="articulo-regla">
+                <p>No le pidas a Claude Code que descubra qué querías hacer. <strong>Explicáselo.</strong></p>
+                <p>Invertir veinte minutos en conversar con un LLM para transformar un PDF en una especificación detallada suele ahorrar varias horas de correcciones y retrabajo.</p>
+                <p class="articulo-cita">Los mejores proyectos con IA no empiezan escribiendo código. Empiezan escribiendo una buena especificación.</p>
+            </div>
+        </section>
+
         <section class="paso">
             <div class="paso-numero">1</div>
             <div class="paso-contenido">
