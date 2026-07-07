@@ -66,14 +66,6 @@ async def taller(request: Request):
     })
 
 
-@app.get("/tutorial")
-async def tutorial(request: Request):
-    return templates.TemplateResponse("tutorial.html", {
-        "request": request,
-        "settings": settings,
-    })
-
-
 @app.get("/health")
 async def health():
     return {"status": "ok"}
